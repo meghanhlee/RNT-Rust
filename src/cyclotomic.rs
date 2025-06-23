@@ -69,10 +69,11 @@ impl CyclotomicInteger {
 // PRINT //
 ///////////
 
-// I just used an LLM for this one...
-// One can also simply add #[derive(Debug)] before the struct
-// declaration, but this yields a cleaner result. Although, I understand
-// the code less.
+// I just used an LLM for this one... One can also simply add
+// #[derive(Debug)] before the struct declaration, but this yields a
+// cleaner result. Although, I understand the code less. Also, note that
+// we implement the `Debug` trait, so the formatter is "{:?}" and not
+// "{}".
 
 impl fmt::Debug for CyclotomicInteger {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
