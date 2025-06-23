@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
-struct CyclotomicInteger {
-    vec: Vec<u32>,
+pub struct CyclotomicInteger {
+    vec: Vec<i32>,
 }
 
 impl CyclotomicInteger {
@@ -10,19 +10,19 @@ impl CyclotomicInteger {
     // CONSTRUCTORS //
     //////////////////
 
-    pub fn from_vec(vec: Vec<u32>) -> Self {
+    pub fn from_vec(vec: Vec<i32>) -> Self {
         
         Self { vec }
 
     }
 
-    pub fn from_hashmap(hashmap: HashMap<usize, u32>, level: u32) -> Self {
+    pub fn from_hashmap(hashmap: HashMap<usize, i32>, level: usize) -> Self {
 
         if level == 0 {
             panic!("no 0th-roots of unity");
         }
 
-        let mut vec = vec![0 as u32, level];
+        let mut vec = vec![0 as i32; level];
 
         for (key, val) in hashmap.into_iter() {
             vec[key as usize] = val;
@@ -33,9 +33,9 @@ impl CyclotomicInteger {
     }
 
 
-    /////////////////
-    // SMALL UTILS //
-    /////////////////
+    ///////////
+    // UTILS //
+    ///////////
 
     pub fn level(&self) -> usize {
         return self.vec.len()
