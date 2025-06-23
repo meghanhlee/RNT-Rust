@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::fmt;
 
 pub struct CyclotomicInteger {
     vec: Vec<i32>,
@@ -18,6 +19,13 @@ impl CyclotomicInteger {
 
     pub fn from_hashmap(hashmap: HashMap<usize, i32>, level: usize) -> Self {
 
+        // Note that we use the hashmap and not a reference. This seems
+        // more idiomatic: our hashmaps are only used to create a
+        // CyclotomicObject. This clearly indicates that the function
+        // `from_hashmap` takes ownership of the input hashmap. This is
+        // based on the implicit assumption that the hashmap will not be
+        // used after.
+
         if level == 0 {
             panic!("no 0th-roots of unity");
         }
@@ -25,7 +33,11 @@ impl CyclotomicInteger {
         let mut vec = vec![0 as i32; level];
 
         for (key, val) in hashmap.into_iter() {
-            vec[key as usize] = val;
+            if key >= level {
+                panic!("the indices of the hashmap should be < than the level")
+            } else {
+                vec[key] = val;
+            }
         }
 
         Self { vec }
@@ -50,4 +62,20 @@ impl CyclotomicInteger {
 
     // }
 
+}
+
+
+///////////
+// PRINT //
+///////////
+
+// I just used an LLM for this one...
+// One can also simply add #[derive(Debug)] before the struct
+// declaration, but this yields a cleaner result. Although, I understand
+// the code less.
+
+impl fmt::Debug for CyclotomicInteger {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        self.vec.fmt(f) 
+    }
 }
