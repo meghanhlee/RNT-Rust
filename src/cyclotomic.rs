@@ -34,7 +34,7 @@ impl CyclotomicInteger {
 
         for (key, val) in hashmap.into_iter() {
             if key >= level {
-                panic!("the indices of the hashmap should be < than the level")
+                panic!("hashmap keys should be < than the level")
             } else {
                 vec[key] = val;
             }
