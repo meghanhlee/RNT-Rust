@@ -53,6 +53,20 @@ impl CyclotomicInteger {
         return self.vec.len()
     }
 
+    pub fn support(&self) -> HashMap<usize, i32> {
+    
+        let mut support = HashMap::new();
+
+        for i in 0..self.level() {
+            if self.vec[i] != 0 as i32 {
+                support.insert(i, self.vec[i]);
+            }
+        }
+    
+        support
+
+    }
+
 
     //////////////////
     // COMPUTATIONS //

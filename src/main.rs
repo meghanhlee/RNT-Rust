@@ -18,5 +18,6 @@ fn main() {
     let a = CyclotomicInteger::from_hashmap(a_hashmap, 10 as usize);
 
     println!("{:?}", a);
+    println!("{:?}", a.support());
 
 }
