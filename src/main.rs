@@ -1,4 +1,5 @@
 mod integers;
+mod cyclotomic;
 
 use integers::euler_phi;
 
