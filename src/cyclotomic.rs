@@ -100,9 +100,7 @@ impl fmt::Debug for CyclotomicInteger {
 //     https://doc.rust-lang.org/std/ops/trait.Index.html
 
 impl Index<usize> for CyclotomicInteger {
-
     type Output = i32;
-
     fn index(&self, i: usize) -> &Self::Output {
         &self.vec[i]
     }
