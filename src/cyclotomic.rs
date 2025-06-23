@@ -73,10 +73,6 @@ impl CyclotomicInteger {
     // COMPUTATIONS //
     //////////////////
     
-    // pub fn conjugates() -> Vec<CyclotomicInteger> {
-
-    // }
-
 }
 
 
