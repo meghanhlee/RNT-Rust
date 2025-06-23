@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 use std::fmt;
+use std::ops::Index;
 
 pub struct CyclotomicInteger {
     vec: Vec<i32>,
@@ -58,7 +59,7 @@ impl CyclotomicInteger {
         let mut support = HashMap::new();
 
         for i in 0..self.level() {
-            if self.vec[i] != 0 as i32 {
+            if self[i] != 0 as i32 {
                 support.insert(i, self.vec[i]);
             }
         }
@@ -79,9 +80,9 @@ impl CyclotomicInteger {
 }
 
 
-///////////
-// PRINT //
-///////////
+////////////
+// TRAITS //
+////////////
 
 // I just used an LLM for this one... One can also simply add
 // #[derive(Debug)] before the struct declaration, but this yields a
@@ -92,5 +93,17 @@ impl CyclotomicInteger {
 impl fmt::Debug for CyclotomicInteger {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         self.vec.fmt(f) 
+    }
+}
+
+// The next one is to define the [ ] access operator. See the doc here:
+//     https://doc.rust-lang.org/std/ops/trait.Index.html
+
+impl Index<usize> for CyclotomicInteger {
+
+    type Output = i32;
+
+    fn index(&self, i: usize) -> &Self::Output {
+        &self.vec[i]
     }
 }
