@@ -22,12 +22,21 @@ fn main() {
 
     // Let's do some testing!
 
-    let level = 4 as usize;
-    let i = CyclotomicInteger::from_vec(vec![0 as i32,
-                                             1 as i32,
-                                             0 as i32,
-                                             0 as i32]);
-    let conjugates = i.conjugates();
-    println!("{:?}", conjugates);
+    let i_Q4 = CyclotomicInteger::from_vec(vec![0 as i32,
+                                                1 as i32,
+                                                0 as i32,
+                                                0 as i32]);
+
+    let i_Q8 = CyclotomicInteger::from_vec(vec![0 as i32,
+                                                0 as i32,
+                                                1 as i32,
+                                                0 as i32,
+                                                0 as i32,
+                                                0 as i32,
+                                                0 as i32,
+                                                0 as i32]);
+
+    println!("{:?}", i_Q4.conjugates());
+    println!("{:?}", i_Q8.conjugates());
 
 }
