@@ -154,6 +154,13 @@ fn max_house(exponents: &Vec<u64>, level: u64) -> f64 {
     max_house
 }
 
+// this is zeta_4 ^ 2, which is -1. the max norm is 1, which is
+// what we expect.
+let exponents = vec![2];
+let level = 4;
+let result = max_house(&exponents, level);
+println!("Maximum house of conjugates is {}", result);
+
 let exponents = vec![0, 1, 2];
 let level = 7;
 let result = max_house(&exponents, level);
