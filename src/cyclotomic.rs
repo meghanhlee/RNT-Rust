@@ -4,6 +4,7 @@ use crate::integers;
 use std::collections::HashMap;
 use std::fmt;
 use std::ops::Index;
+use std::f64::consts::TAU;
 // Second: our own library
 use integers::{euler_phi, invertible_mod};
 
@@ -117,6 +118,48 @@ impl CyclotomicInteger {
     }
     
 }
+
+// June 24 rewrites
+
+// added use std::f64::consts::TAU;
+
+fn gcd(a: u64, b: u64) -> u64 {
+    if b == 0{
+        a }
+    else { gcd(b, a%b) }
+}
+
+fn max_house(exponents: &Vec<u64>, level: u64) -> f64 {
+    let mut max_house = 0.0;
+
+    for k in 1..level {
+        if gcd(k, level) != 1 {
+            continue;
+        }
+
+    let mut cos_sum = 0.0;
+    let mut sin_sum = 0.0;
+
+    for &i in exponents {
+        let angle = TAU * (k * i % level) as f64 / level as f64;
+        cos_sum += angle.cos();
+        sin_sum += angle.sin();
+    }
+
+    let house = cos_sum.powi(2) + sin_sum.powi(2);
+    if house > max_house {
+        max_house = house;
+        }
+    }
+    max_house
+}
+
+let exponents = vec![0, 1, 2];
+let level = 7;
+let result = max_house(&exponents, level);
+println!("Maximum house of conjugates is {}", result);
+
+
 
 
 ////////////
