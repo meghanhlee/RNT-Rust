@@ -8,6 +8,7 @@ use std::ops::Index;
 use integers::{euler_phi, invertible_mod};
 
 pub struct CyclotomicInteger {
+    level: u32,
     vec: Vec<i32>,
 }
 
@@ -17,13 +18,17 @@ impl CyclotomicInteger {
     // CONSTRUCTORS //
     //////////////////
 
-    pub fn from_vec(vec: Vec<i32>) -> Self {
+    pub fn from_vec(vec: Vec<i32>, level: u32) -> Self {
         
-        Self { vec }
+        if !euler_phi(level) == vec.len() {
+            panic!("the vector should contain Euler-phi elements");
+        }
+
+        Self { vec, level }
 
     }
 
-    pub fn from_hashmap(hashmap: HashMap<usize, i32>, level: usize) -> Self {
+    pub fn from_hashmap(hashmap: HashMap<usize, i32>, level: u32) -> Self {
 
         // Note that we use the hashmap and not a reference. This seems
         // more idiomatic: our hashmaps are only used to create a
@@ -36,17 +41,18 @@ impl CyclotomicInteger {
             panic!("no 0th-roots of unity");
         }
 
-        let mut vec = vec![0 as i32; level];
+        let euler_phi_level = euler_phi(level);
+        let mut vec = vec![0 as i32; euler_phi_level];
 
         for (key, val) in hashmap.into_iter() {
-            if key >= level {
-                panic!("hashmap keys should be < than the level")
+            if key >= euler_phi_level {
+                panic!("hashmap keys should be < than Euler-phi of the level")
             } else {
                 vec[key] = val;
             }
         }
 
-        Self { vec }
+        Self { vec, level }
 
     }
 
@@ -55,15 +61,20 @@ impl CyclotomicInteger {
     // UTILS //
     ///////////
 
-    pub fn level(&self) -> usize {
-        self.vec.len()
+    fn euler_phi(&self) -> u32 {
+        // WARNING: The existence of this function is debatable
+        euler_phi(self.vec.len())
+    }
+
+    pub fn level(&self) -> u32 {
+        self.level
     }
 
     pub fn support(&self) -> HashMap<usize, i32> {
     
         let mut support = HashMap::new();
 
-        for i in 0..self.level() {
+        for i in 0..self.euler_phi() {
             if self[i] != 0 as i32 {
                 support.insert(i, self.vec[i]);
             }
@@ -80,9 +91,8 @@ impl CyclotomicInteger {
 
     pub fn conjugates(&self) -> Vec<CyclotomicInteger> {
 
-        // First, create euler_phi(n) vectors of length `level`:
         let level = self.level();
-        let euler = euler_phi(level as u32);
+        let euler = self.euler_phi();
         let mut conjugates_vec: Vec<Vec<i32>> = Vec::new();
         // Now, store the Galois group
         let galois = invertible_mod(level as u32);
@@ -90,8 +100,8 @@ impl CyclotomicInteger {
         // Generate all conjugates, without repetition
         for k in galois {
             // Generate the conjugate for the k-th Galois automorphism:
-            let mut conjugate_vec = vec![0 as i32; level];
-            for i in 0..level {
+            let mut conjugate_vec = vec![0 as i32; euler];
+            for i in 0..euler {
                 // TODO: Implement `iter` for our struct
                 let index = (i * (k as usize)) % level;
                 conjugate_vec[index] = self[i];
