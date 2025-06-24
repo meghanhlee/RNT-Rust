@@ -131,7 +131,7 @@ impl CyclotomicInteger {
 
 impl fmt::Debug for CyclotomicInteger {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        self.support().fmt(f) 
+        self.vec.fmt(f) 
     }
 }
 

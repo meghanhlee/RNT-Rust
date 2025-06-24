@@ -20,4 +20,14 @@ fn main() {
     println!("{:?}", a);
     println!("{:?}", a.support());
 
+    // Let's do some testing!
+
+    let level = 4 as usize;
+    let i = CyclotomicInteger::from_vec(vec![0 as i32,
+                                             1 as i32,
+                                             0 as i32,
+                                             0 as i32]);
+    let conjugates = i.conjugates();
+    println!("{:?}", conjugates);
+
 }
